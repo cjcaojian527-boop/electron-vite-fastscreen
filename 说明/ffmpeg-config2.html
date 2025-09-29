@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FFmpeg fluent-ffmpeg 方法与参数配置指南</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f8f8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #0056b3;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            border-bottom: none;
+            color: #004085;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.8em;
+        }
+
+        h3 {
+            font-size: 1.4em;
+            color: #28a745;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        code {
+            background-color: #e9ecef;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            color: #d63384;
+        }
+
+        pre {
+            background-color: #f4f6f9;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            border: 1px solid #ced4da;
+            color: #343a40;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        th,
+        td {
+            border: 1px solid #dee2e6;
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f7fc;
+        }
+
+        tr:hover {
+            background-color: #e2f0fb;
+        }
+
+        .note {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            color: #664d03;
+        }
+
+        .tip {
+            background-color: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 15px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            color: #0c5460;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            padding-left: 0;
+        }
+
+        ul li {
+            margin-bottom: 8px;
+        }
+
+        /* Tab Styles */
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .tab-button {
+            padding: 12px 20px;
+            cursor: pointer;
+            background-color: #e9ecef;
+            border: 1px solid #dee2e6;
+            border-bottom: none;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            margin-right: 5px;
+            font-weight: bold;
+            color: #495057;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .tab-button:hover {
+            background-color: #dfe6ee;
+        }
+
+        .tab-button.active {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .tab-content {
+            display: none;
+            /* Hidden by default */
+            padding-top: 20px;
+            border-top: 1px solid #dee2e6;
+            /* To align with the bottom of tabs */
+        }
+
+        .tab-content.active {
+            display: block;
+            /* Show active tab content */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>FFmpeg fluent-ffmpeg 方法与参数配置指南</h1>
+
+        <div class="tabs">
+            <div class="tab-button active" onclick="openTab(event, 'paramConfig')">参数配置 (inputOptions / outputOptions)
+            </div>
+            <div class="tab-button" onclick="openTab(event, 'instanceMethods')">实例方法 (run / kill / on 等)</div>
+        </div>
+
+        <div id="paramConfig" class="tab-content active">
+            <p>本文档旨在详细解释 <code>fluent-ffmpeg</code> 库中 <code>.inputOptions()</code> 和 <code>.outputOptions()</code>
+                方法的常用参数及其用法。这些参数直接映射到 FFmpeg 命令行，用于精细控制音视频的输入读取和输出编码。</p>
+
+            <div class="note">
+                <h4>重要提示：</h4>
+                <ul>
+                    <li><code>fluent-ffmpeg</code> 的方法是链式调用，参数通常作为字符串数组传递。</li>
+                    <li>你需要对 FFmpeg 的命令行参数有基本的了解。</li>
+                    <li>某些参数可以在输入和输出中都使用（例如 <code>-t</code>、<code>-r</code>），但它们的作用在不同上下文中可能有所不同。</li>
+                </ul>
+            </div>
+
+            <h2>一、<code>.inputOptions()</code> 参数</h2>
+            <p>这些参数影响 FFmpeg **如何读取和解释输入文件或设备**。它们通常在 FFmpeg 命令行中出现在 <code>-i &lt;input_path&gt;</code> 参数之前。</p>
+
+            <h3>用法示例：</h3>
+            <pre><code>ffmpeg()
+    .input('desktop')
+    .inputFormat('gdigrab') // 或者 .fromFormat('gdigrab')
+    .inputOptions([
+        '-framerate 30',          // 设定输入捕获帧率为 30 FPS
+        '-video_size 1920x1080', // 设定输入视频尺寸为 1920x1080
+        '-draw_mouse 1'           // 捕获鼠标
+    ])
+    // ... 其他链式调用
+    .run();
+</code></pre>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>作用</th>
+                        <th>用法示例 (在 <code>inputOptions</code> 中)</th>
+                        <th>常见场景</th>
+                        <th>注意事项</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>-f &lt;format&gt;</code></td>
+                        <td>强制指定输入格式。</td>
+                        <td><code>'-f gdigrab'</code></td>
+                        <td>设备捕获 (如 <code>gdigrab</code>)，或处理无法自动识别格式的流。</td>
+                        <td>当使用 <code>inputFormat()</code> 或 <code>fromFormat()</code> 时，通常不需要重复指定。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-ss &lt;time&gt;</code></td>
+                        <td>从输入的指定时间点开始读取。</td>
+                        <td><code>'-ss 00:01:30'</code> (从1分30秒开始)</td>
+                        <td>截取视频的某一段，或从视频中间开始处理。</td>
+                        <td>时间格式可以是 <code>HH:MM:SS</code> 或秒数 (<code>'90'</code>)。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-t &lt;duration&gt;</code></td>
+                        <td>限制输入的持续时间（FFmpeg 只读取输入的前N秒/分钟）。</td>
+                        <td><code>'-t 60'</code> (只读取前60秒)</td>
+                        <td>快速测试，或处理大型输入文件的部分。</td>
+                        <td><strong>与 <code>outputOptions</code> 中的 <code>-t</code>
+                                区分</strong>：这里是限制**输入读取**的长度，不会直接决定最终输出时长。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-r &lt;framerate&gt;</code></td>
+                        <td>设置输入捕获的帧率。</td>
+                        <td><code>'-framerate 30'</code></td>
+                        <td>屏幕录制、摄像头捕获等设备输入。</td>
+                        <td>确保输入帧率与你的捕获能力匹配。过高的帧率可能导致掉帧。建议与输出帧率保持一致或合理转换。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-s &lt;WxH&gt;</code></td>
+                        <td>设置输入视频的分辨率。</td>
+                        <td><code>'-video_size 1920x1080'</code></td>
+                        <td>屏幕录制时指定捕获区域分辨率。</td>
+                        <td>并非所有输入设备都支持任意分辨率。如果未指定，通常会捕获设备的默认或最大分辨率。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-offset_x &lt;x&gt;</code></td>
+                        <td>(仅限 <code>gdigrab</code>) 捕获区域的 X 坐标偏移。</td>
+                        <td><code>'-offset_x 100'</code></td>
+                        <td>Windows 桌面录制，录制部分屏幕。</td>
+                        <td>需配合 <code>-offset_y</code> 使用。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-offset_y &lt;y&gt;</code></td>
+                        <td>(仅限 <code>gdigrab</code>) 捕获区域的 Y 坐标偏移。</td>
+                        <td><code>'-offset_y 50'</code></td>
+                        <td>Windows 桌面录制，录制部分屏幕。</td>
+                        <td>需配合 <code>-offset_x</code> 使用。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-draw_mouse 0|1</code></td>
+                        <td>(仅限 <code>gdigrab</code>) 是否捕获鼠标指针 (0为否，1为是)。</td>
+                        <td><code>'-draw_mouse 1'</code></td>
+                        <td>Windows 桌面录制。</td>
+                        <td>默认为 1。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-show_region 0|1</code></td>
+                        <td>(仅限 <code>gdigrab</code>) 是否显示捕获区域框 (0为否，1为是)。</td>
+                        <td><code>'-show_region 0'</code></td>
+                        <td>Windows 桌面录制。</td>
+                        <td>默认为 1。在录制时显示一个绿色的框。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-i audio="device_name"</code></td>
+                        <td>(仅限 <code>dshow</code> / <code>avfoundation</code> 等) 录制音频设备。</td>
+                        <td><code>'-i audio="virtual-audio-capturer"'</code> (Windows dshow)</td>
+                        <td>屏幕录制时同时录制系统音频。</td>
+                        <td>需安装并配置虚拟音频设备或选择正确的物理麦克风。需要额外的 <code>addInput()</code> 调用来添加音频输入流。</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>二、<code>.outputOptions()</code> 参数</h2>
+            <p>这些参数影响 FFmpeg **如何编码、处理和生成输出文件**。它们通常在 FFmpeg 命令行中出现在所有输入参数和输出文件路径之间。</p>
+
+            <h3>用法示例：</h3>
+            <pre><code>ffmpeg()
+    // ... 输入配置
+    .videoCodec('libx264')
+    .outputOptions([
+        '-crf 20',                // 核心：控制视频质量，20通常很清晰
+        '-preset medium',         // 兼顾编码速度和文件大小的良好平衡
+        '-pix_fmt yuv420p',       // 兼容性好的像素格式
+        '-r 60',                  // 输出帧率与输入保持一致
+        '-t 10'                   // 输出时长10秒
+    ])
+    .output('output.mp4')
+    // ... 事件监听
+    .run();
+</code></pre>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>作用</th>
+                        <th>用法示例 (在 <code>outputOptions</code> 中)</th>
+                        <th>常见场景</th>
+                        <th>注意事项</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>-t &lt;duration&gt;</code></td>
+                        <td>限制输出视频的总时长。</td>
+                        <td><code>'-t 10'</code> (输出视频10秒)</td>
+                        <td>所有转码/录制场景，限制输出文件长度。</td>
+                        <td><strong>与 <code>inputOptions</code> 中的 <code>-t</code> 区分</strong>：这里是限制**输出文件**的长度。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-c:v &lt;codec&gt;</code></td>
+                        <td>视频编码器。</td>
+                        <td><code>'-c:v libx264'</code></td>
+                        <td>设置视频压缩方式。</td>
+                        <td>也可以使用 <code>videoCodec()</code> 方法。确保你安装的 FFmpeg 支持该编码器。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-c:a &lt;codec&gt;</code></td>
+                        <td>音频编码器。</td>
+                        <td><code>'-c:a aac'</code></td>
+                        <td>设置音频压缩方式。</td>
+                        <td>也可以使用 <code>audioCodec()</code> 方法。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-crf &lt;value&gt;</code></td>
+                        <td><strong>视频质量 (Constant Rate Factor)</strong>。对于 <code>libx264/libx265</code> 最推荐。</td>
+                        <td><code>'-crf 20'</code> (值越小质量越高，文件越大)</td>
+                        <td>高质量视频编码。</td>
+                        <td><strong>核心参数！</strong> 范围通常是 0-51。23是默认值，18接近视觉无损。屏幕录制文字等细节多，推荐 18-22。**通常不与
+                            <code>-b:v</code> 同时使用**。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-b:v &lt;bitrate&gt;</code></td>
+                        <td>视频比特率。</td>
+                        <td><code>'-b:v 2M'</code> (2 Mbps)</td>
+                        <td>精确控制文件大小。</td>
+                        <td><strong>与 <code>-crf</code> 互斥</strong>，不要同时设置。固定比特率可能导致在复杂场景下质量不足。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-b:a &lt;bitrate&gt;</code></td>
+                        <td>音频比特率。</td>
+                        <td><code>'-b:a 128k'</code></td>
+                        <td>控制音频质量和文件大小。</td>
+                        <td>例如 <code>64k</code> (低质量)，<code>128k</code> (中等)，<code>192k</code> (高质量)。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-preset &lt;name&gt;</code></td>
+                        <td>编码速度预设。影响编码速度和压缩效率。</td>
+                        <td><code>'-preset medium'</code> (推荐平衡)</td>
+                        <td>平衡编码速度和文件大小。</td>
+                        <td>值有 <code>ultrafast</code>, <code>superfast</code>, <code>fast</code>, <code>medium</code>,
+                            <code>slow</code>, <code>veryslow</code>。越慢的预设压缩效率越高，但编码时间长。<strong>建议直接通过
+                                <code>outputOptions</code> 传递，避免 <code>preset()</code> 方法可能的问题</strong>。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-pix_fmt &lt;format&gt;</code></td>
+                        <td>像素格式。</td>
+                        <td><code>'-pix_fmt yuv420p'</code></td>
+                        <td>确保视频兼容性。</td>
+                        <td><code>yuv420p</code> 是最常见的兼容格式，适用于大多数播放器和 Web。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-r &lt;framerate&gt;</code></td>
+                        <td>输出帧率。</td>
+                        <td><code>'-r 60'</code></td>
+                        <td>调整最终视频播放帧率。</td>
+                        <td><strong>务必与输入帧率保持一致或合理转换</strong>，否则可能导致视频不流畅或模糊。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-vf &lt;filter_graph&gt;</code></td>
+                        <td>视频滤镜图。</td>
+                        <td><code>'-vf scale=1280:-1'</code></td>
+                        <td>视频尺寸调整、裁剪、水印等。</td>
+                        <td>滤镜图语法复杂，需要查阅 FFmpeg 官方文档。<code>-1</code> 表示按比例自动调整。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-af &lt;filter_graph&gt;</code></td>
+                        <td>音频滤镜图。</td>
+                        <td><code>'-af volume=2.0'</code></td>
+                        <td>音量调整、混音、去除噪音等。</td>
+                        <td>滤镜图语法复杂。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-threads &lt;num&gt;</code></td>
+                        <td>编码时使用的线程数。</td>
+                        <td><code>'-threads 0'</code> (使用所有可用线程)</td>
+                        <td>加速编码。</td>
+                        <td><code>0</code> 表示使用所有可用线程。过多的线程可能会适得其反。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-map &lt;stream_spec&gt;</code></td>
+                        <td>映射输入流到输出。</td>
+                        <td><code>'-map 0:v'</code> (映射第一个输入的视频流)</td>
+                        <td>多个输入或选择特定流时。</td>
+                        <td>精确控制要包含在输出中的视频、音频、字幕等流。</td>
+                    </tr>
+                    <tr>
+                        <td><code>-n</code></td>
+                        <td>不覆盖已存在的输出文件。</td>
+                        <td><code>'-n'</code></td>
+                        <td>防止文件被意外覆盖。</td>
+                        <td>如果输出文件已存在，FFmpeg 会报错并退出。</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="tip">
+                <h3>使用建议：</h3>
+                <ul>
+                    <li>**质量优先：** 对于屏幕录制，优先使用 <code>-crf</code> (如 <code>-crf 20</code> 或更低)。</li>
+                    <li>**流畅度：** 确保输入和输出的 <code>-r</code> (帧率) 一致。</li>
+                    <li>**兼容性：** 推荐使用 <code>-pix_fmt yuv420p</code>。</li>
+                    <li>**调试：** 始终监听 <code>'error'</code> 事件，并打印 <code>stdout</code> 和 <code>stderr</code> 来获取 FFmpeg
+                        详细日志。</li>
+                    <li>**避免冲突：** 不要同时使用 <code>.preset()</code> 方法和
+                        <code>.outputOptions(['-preset ...'])</code>。建议只使用后者。</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="instanceMethods" class="tab-content">
+            <p>本文档作为 <code>fluent-ffmpeg</code> 参数配置指南的补充，详细解释了 <code>FfmpegCommand</code> 实例上除了
+                <code>.inputOptions()</code> 和 <code>.outputOptions()</code> 之外的常用方法。</p>
+
+            <div class="note">
+                <h4>重要提示：</h4>
+                <ul>
+                    <li><code>ffmpeg()</code> 调用会返回一个 <code>FfmpegCommand</code> 实例，所有这些方法都在该实例上调用。</li>
+                    <li>许多方法支持链式调用，使得代码可读性更强。</li>
+                </ul>
+            </div>
+
+            <h2>一、进程控制与执行</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>方法名</th>
+                        <th>作用</th>
+                        <th>用法示例</th>
+                        <th>返回/回调</th>
+                        <th>注意事项</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>.run()</code></td>
+                        <td>启动 FFmpeg 进程，执行构建的命令。</td>
+                        <td>
+                            <pre><code>command.run();</code></pre>
+                        </td>
+                        <td>无直接返回，异步执行。结果通过事件监听器处理。</td>
+                        <td>这是命令链的终点，调用后 FFmpeg 进程开始运行。必须监听 <code>'end'</code> 和 <code>'error'</code> 事件。</td>
+                    </tr>
+                    <tr>
+                        <td><code>.kill([signal])</code></td>
+                        <td>终止正在运行的 FFmpeg 进程。</td>
+                        <td>
+                            <pre><code>command.kill('SIGINT'); // 优雅终止
+command.kill('SIGKILL'); // 强制终止
+</code></pre>
+                        </td>
+                        <td><code>FfmpegCommand</code> 实例本身。</td>
+                        <td><code>'SIGINT'</code> 通常会触发 FFmpeg 尝试完成当前文件写入。<code>'SIGKILL'</code> 是强制杀死，可能导致文件损坏。</td>
+                    </tr>
+                    <tr>
+                        <td><code>.hasInput()</code> / <code>.hasOutput()</code></td>
+                        <td>检查命令实例是否包含输入/输出。</td>
+                        <td>
+                            <pre><code>if (command.hasInput()) { ... }</code></pre>
+                        </td>
+                        <td>布尔值。</td>
+                        <td>作为 Getter 使用，例如 <code>command.hasInput</code>。</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>二、事件监听</h2>
+            <p><code>fluent-ffmpeg</code> 通过事件来报告 FFmpeg 进程的生命周期和进度，这是处理异步操作的关键。</p>
+
+            <h3>用法示例：</h3>
+            <pre><code>command
+    .on('start', function(commandLine) {
+        console.log('FFmpeg 命令已启动: ' + commandLine);
+    })
+    .on('progress', function(progress) {
+        console.log('处理进度: ' + progress.timemark);
+    })
+    .on('end', function(stdout, stderr) {
+        console.log('操作完成');
+    })
+    .on('error', function(err, stdout, stderr) {
+        console.error('发生错误:', err.message);
+        console.error('FFmpeg stdout:', stdout);
+        console.error('FFmpeg stderr:', stderr);
+    });
+</code></pre>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>事件名</th>
+                        <th>作用</th>
+                        <th>回调参数</th>
+                        <th>常见场景</th>
+                        <th>注意事项</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>'start'</code></td>
+                        <td>FFmpeg 进程成功启动时触发。</td>
+                        <td><code>commandLine</code> (string)：实际执行的 FFmpeg 命令字符串。</td>
+                        <td>记录日志，显示启动信息。</td>
+                        <td>非常适合调试生成的 FFmpeg 命令。</td>
+                    </tr>
+                    <tr>
+                        <td><code>'progress'</code></td>
+                        <td>在 FFmpeg 处理过程中定期触发，报告进度。</td>
+                        <td><code>progress</code> (object)：包含 <code>frames</code>, <code>currentFps</code>,
+                            <code>timemark</code>, <code>percent</code> (对于实时流可能不准确) 等。</td>
+                        <td>显示进度条，更新实时状态。</td>
+                        <td>对于实时流，<code>percent</code> 字段可能为 <code>NaN</code> 或不准确。</td>
+                    </tr>
+                    <tr>
+                        <td><code>'end'</code></td>
+                        <td>FFmpeg 进程成功完成所有操作时触发。</td>
+                        <td><code>stdout</code> (string), <code>stderr</code> (string)：FFmpeg 的完整标准输出和标准错误输出。</td>
+                        <td>操作成功后的通知，清理资源。</td>
+                        <td>确保文件已完整生成。</td>
+                    </tr>
+                    <tr>
+                        <td><code>'error'</code></td>
+                        <td>FFmpeg 进程执行过程中遇到任何错误时触发。</td>
+                        <td><code>err</code> (Error), <code>stdout</code> (string), <code>stderr</code> (string)：错误对象及
+                            FFmpeg 输出。</td>
+                        <td>错误处理，调试问题。</td>
+                        <td><strong>至关重要！</strong> 必须监听此事件。<code>stderr</code> 包含详细的错误日志。</td>
+                    </tr>
+                    <tr>
+                        <td><code>'codecData'</code></td>
+                        <td>FFmpeg 读取到输入流的编解码器数据时触发。</td>
+                        <td><code>data</code> (object)：输入流的详细信息（如音频/视频流是否存在，时长，格式等）。</td>
+                        <td>获取输入文件元数据，例如判断视频是否有音频流。</td>
+                        <td>在 <code>'start'</code> 之前触发。</td>
+                    </tr>
+                    <tr>
+                        <td><code>'stderr'</code></td>
+                        <td>每当 FFmpeg 进程向标准错误输出一行数据时触发。</td>
+                        <td><code>stderrLine</code> (string)：FFmpeg 标准错误输出的单行文本。</td>
+                        <td>实时监控 FFmpeg 的底层输出，进行更细粒度的调试。</td>
+                        <td>通常用于高级调试。</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>三、获取 FFmpeg 信息</h2>
+            <p>这些方法通常作为 <code>ffmpeg</code> 模块的静态方法调用，用于查询 FFmpeg 的能力。</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>方法名</th>
+                        <th>作用</th>
+                        <th>用法示例</th>
+                        <th>回调参数</th>
+                        <th>注意事项</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>ffmpeg.availableCodecs()</code></td>
+                        <td>获取 FFmpeg 支持的所有编解码器列表。</td>
+                        <td>
+                            <pre><code>ffmpeg.availableCodecs((err, codecs) => {
+    if (!err) console.log(codecs);
+});</code></pre>
+                        </td>
+                        <td><code>err</code> (Error), <code>codecs</code> (object)</td>
+                        <td>异步方法，需要回调函数处理结果。</td>
+                    </tr>
+                    <tr>
+                        <td><code>ffmpeg.availableFormats()</code></td>
+                        <td>获取 FFmpeg 支持的所有格式列表。</td>
+                        <td>
+                            <pre><code>ffmpeg.availableFormats((err, formats) => {
+    if (!err) console.log(formats);
+});</code></pre>
+                        </td>
+                        <td><code>err</code> (Error), <code>formats</code> (object)</td>
+                        <td>异步方法。</td>
+                    </tr>
+                    <tr>
+                        <td><code>ffmpeg.availableFilters()</code></td>
+                        <td>获取 FFmpeg 支持的所有滤镜列表。</td>
+                        <td>
+                            <pre><code>ffmpeg.availableFilters((err, filters) => {
+    if (!err) console.log(filters);
+});</code></pre>
+                        </td>
+                        <td><code>err</code> (Error), <code>filters</code> (object)</td>
+                        <td>异步方法。</td>
+                    </tr>
+                    <tr>
+                        <td><code>ffmpeg.getFfmpegPath()</code></td>
+                        <td>获取当前配置的 FFmpeg 可执行文件路径。</td>
+                        <td>
+                            <pre><code>const path = ffmpeg.getFfmpegPath();</code></pre>
+                        </td>
+                        <td>字符串。</td>
+                        <td>作为 Getter 使用。</td>
+                    </tr>
+                    <tr>
+                        <td><code>ffmpeg.getFfprobePath()</code></td>
+                        <td>获取当前配置的 FFprobe 可执行文件路径 (用于分析媒体文件)。</td>
+                        <td>
+                            <pre><code>const path = ffmpeg.getFfprobePath();</code></pre>
+                        </td>
+                        <td>字符串。</td>
+                        <td>作为 Getter 使用。通常 `ffmpeg-static` 也会提供 `ffprobe`。</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>四、其他实用方法 (高级或便捷操作)</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>方法名</th>
+                        <th>作用</th>
+                        <th>用法示例</th>
+                        <th>返回/回调</th>
+                        <th>注意事项</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>.setFfmpegPath(path)</code></td>
+                        <td>设置 FFmpeg 可执行文件的路径。</td>
+                        <td>
+                            <pre><code>ffmpeg.setFfmpegPath('/usr/local/bin/ffmpeg');</code></pre>
+                        </td>
+                        <td>无。</td>
+                        <td>通常在应用启动时调用一次，设置全局路径。这是一个静态方法，直接在 <code>ffmpeg</code> 模块上调用。</td>
+                    </tr>
+                    <tr>
+                        <td><code>.mergeToFile(outputPath, folderPath)</code></td>
+                        <td>合并多个输入文件到一个输出文件。</td>
+                        <td>
+                            <pre><code>command.mergeToFile('output.mp4', '/tmp/');</code></pre>
+                        </td>
+                        <td><code>FfmpegCommand</code> 实例。</td>
+                        <td>通常用于简单的文件串联合并。</td>
+                    </tr>
+                    <tr>
+                        <td><code>.seekInput(time)</code></td>
+                        <td>在输入流中跳转到指定时间 (等同于 <code>-ss</code> 输入选项)。</td>
+                        <td>
+                            <pre><code>command.input('video.mp4').seekInput('00:00:10');</code></pre>
+                        </td>
+                        <td><code>FfmpegCommand</code> 实例。</td>
+                        <td>方便的链式调用，作用与 `inputOptions(['-ss ...'])` 相同。</td>
+                    </tr>
+                    <tr>
+                        <td><code>.duration(time)</code></td>
+                        <td>设置输出时长 (等同于 <code>-t</code> 输出选项)。</td>
+                        <td>
+                            <pre><code>command.duration(10); // 10秒</code></pre>
+                        </td>
+                        <td><code>FfmpegCommand</code> 实例。</td>
+                        <td>方便的链式调用，作用与 `outputOptions(['-t ...'])` 相同。</td>
+                    </tr>
+                    <tr>
+                        <td><code>.size(WxH)</code></td>
+                        <td>设置输出视频尺寸 (等同于 <code>-s</code> 输出选项)。</td>
+                        <td>
+                            <pre><code>command.size('640x480');</code></pre>
+                        </td>
+                        <td><code>FfmpegCommand</code> 实例。</td>
+                        <td>方便的链式调用，作用与 `outputOptions(['-s ...'])` 相同。</td>
+                    </tr>
+                    <tr>
+                        <td><code>.autopad([color], [width], [height])</code></td>
+                        <td>自动填充黑边以适应输出尺寸。</td>
+                        <td>
+                            <pre><code>command.autopad(); // 自动填充
+command.autopad('black'); // 填充黑色</code></pre>
+                        </td>
+                        <td><code>FfmpegCommand</code> 实例。</td>
+                        <td>通常与 <code>.size()</code> 结合使用。</td>
+                    </tr>
+                    <tr>
+                        <td><code>.complexFilter(filters, [map])</code></td>
+                        <td>构建复杂的滤镜图。</td>
+                        <td>
+                            <pre><code>command.complexFilter([
+    'overlay=10:10',
+    'drawtext=text="Hello":x=10:y=10'
+]);</code></pre>
+                        </td>
+                        <td><code>FfmpegCommand</code> 实例。</td>
+                        <td>**高级用法！** 用于实现画中画、多视频叠加、复杂文本/图形绘制等。需要深入了解 FFmpeg 滤镜图语法。</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabContent, tabButtons;
+
+            // Get all elements with class="tab-content" and hide them
+            tabContent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabContent.length; i++) {
+                tabContent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tab-button" and remove the "active" class
+            tabButtons = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].className = tabButtons[i].className.replace(" active", "");
+            }
+
+            // Show the current tab, and add an "active" class to the button that opened the tab
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Default open the first tab
+        document.addEventListener('DOMContentLoaded', () => {
+            // Ensure only the first tab content is visible and its button is active on load
+            // This is handled by setting 'active' classes directly in HTML for initial state
+            // and then the JS function takes over on click.
+        });
+    </script>
+</body>
+
+</html>

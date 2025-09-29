@@ -1,0 +1,71 @@
+.draggable-box {
+    position: absolute;
+    border: 1px solid #39f;
+    box-sizing: border-box;
+    cursor: move;
+    user-select: none;
+    z-index: 1;
+}
+
+/* 八方向手柄 */
+.handle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border: 1px solid #fff;
+    background-color: #006cd9;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.handle-n {
+    top: -4px;
+    left: 50%;
+    margin-left: -4px;
+    cursor: n-resize;
+}
+
+.handle-e {
+    right: -4px;
+    top: 50%;
+    margin-top: -4px;
+    cursor: e-resize;
+}
+
+.handle-s {
+    bottom: -4px;
+    left: 50%;
+    margin-left: -4px;
+    cursor: s-resize;
+}
+
+.handle-w {
+    left: -4px;
+    top: 50%;
+    margin-top: -4px;
+    cursor: w-resize;
+}
+
+.handle-nw {
+    top: -4px;
+    left: -4px;
+    cursor: nw-resize;
+}
+
+.handle-ne {
+    top: -4px;
+    right: -4px;
+    cursor: ne-resize;
+}
+
+.handle-sw {
+    bottom: -4px;
+    left: -4px;
+    cursor: sw-resize;
+}
+
+.handle-se {
+    bottom: -4px;
+    right: -4px;
+    cursor: se-resize;
+}

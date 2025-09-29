@@ -1,0 +1,207 @@
+.BaseComp {
+    height: 100%;
+    padding: 10px;
+    position: relative;
+
+
+    .BaseComp-loading {
+        position: absolute;
+        z-index: 999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.1725490196);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #f75656;
+        font-size: 30px;
+        user-select: none;
+    }
+
+    .BaseComp-left {
+        height: 100%;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .ant-select-selection-item {
+            div.itmes {
+                font-size: 14px;
+                display: flex;
+                padding: 0 8px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 106px;
+
+                .anticon {
+                    font-size: 24px;
+                    padding-right: 10px;
+                    color: #2e7fff;
+                }
+            }
+        }
+
+        .ant-select-item-option-content {
+            font-size: 20px;
+        }
+
+        .ant-select {
+            .ant-select-selector {
+                border-radius: 0;
+            }
+        }
+
+        .title-p {
+            padding: 10px 0;
+            color: #9E9E9E;
+        }
+
+        .BaseComp-left-titleBar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e2f4ff;
+            border-radius: 30px;
+            color: #2e7fff;
+            padding: 10px 12px;
+            width: 51%;
+
+            span {
+                font-size: 14px;
+                margin: 0 8px
+            }
+
+            .anticon {
+                font-size: 24px;
+
+            }
+        }
+    }
+
+
+
+    .videoBox {
+        height: 100%;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .ant-btn {
+            width: 35%;
+            margin-left: auto;
+        }
+
+        .video-conner {
+            height: 80%;
+            background-color: #323232;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            video {
+                width: 100%;
+                object-fit: contain;
+            }
+        }
+    }
+
+}
+
+.cameraModal {
+    user-select: none;
+
+    .ant-modal-title {
+        background-color: #2e7fff;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 400;
+        padding: 7px 8px;
+        display: flex;
+        justify-content: space-between;
+
+        .anticon {
+            cursor: pointer;
+        }
+    }
+
+    .ant-modal-content {
+        padding: 0;
+        border-radius: 0;
+
+        .ant-modal-body {
+            min-height: 100px;
+
+            .ant-select {
+                width: 200px;
+                margin: 10px 0;
+
+            }
+        }
+
+
+        .ant-modal-footer {
+            .footer {
+                display: flex;
+                align-items: center;
+
+                a {
+                    width: 50%;
+                    text-align: center;
+                    border-top: solid 1px #f0f0f0;
+                    padding: 10px 12px;
+                    cursor: auto;
+                    user-select: none;
+
+                }
+
+                .a1 {
+                    background-color: #2e7fff;
+                    color: #fff;
+                }
+
+                .a2 {
+                    background-color: #ffffff;
+                    color: #000;
+                }
+
+                .a1:hover {
+                    background-color: #2a73e7;
+                }
+
+                .a2:hover {
+                    background-color: #eeeeee;
+                }
+            }
+        }
+    }
+}
+
+
+
+#Tooltips {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .winList-item {
+        // width: 200px;
+        /* 1. 隐藏溢出内容 */
+        overflow: hidden;
+        /* 2. 强制文本不换行 */
+        white-space: nowrap;
+        /* 3. 显示省略号 */
+        text-overflow: ellipsis;
+        border: solid 1px #dfdddd;
+        border-radius: 4px;
+        padding: 0 6px;
+
+        img {
+            width: 30px;
+        }
+    }
+}

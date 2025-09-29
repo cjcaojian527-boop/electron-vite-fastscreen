@@ -1,0 +1,70 @@
+.SuspendedBall {
+    background-color: transparent;
+    width: 175px;
+    // height: 60px;
+    //border: solid 1px #fc4383;
+    position: relative;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    user-select: none;
+
+    .Ball {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        background-color: #449aff;
+        border: 3px solid #fff;
+        z-index: 2;
+        box-shadow: 0 0 2px 2px #00000021;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 14px;
+        
+        // -webkit-app-region: drag;
+        // -webkit-user-select: none;
+    }
+
+    .Ball:hover .toops {
+        background-color: #449aff;
+    }
+
+    .toops {
+        width: 130px;
+        background-color: #fefeff;
+        border: 2px solid #e6eff4;
+        height: 42px;
+        border-radius: 40px;
+        z-index: 1;
+        position: absolute;
+        left: 15%;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        cursor: auto;
+
+        .anticon {
+            font-size: 24px;
+            color: #9d9999;
+            margin-right: 8px;
+        }
+
+        .anticon-x {
+            font-size: 20px !important;
+        }
+
+        .anticon-caret-right {
+            font-size: 29px;
+            margin-right: 4px;
+        }
+
+        .anticon-pause:hover,
+        .anticon-caret-right:hover,
+        .anticon-highlight:hover {
+            color: #419fff;
+        }
+
+    }
+}

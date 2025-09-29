@@ -1,0 +1,75 @@
+.TimeOutComp {
+    height: 100%;
+    position: relative;
+    user-select: none;
+     /* 关键步骤2: 将背景设置为透明 */
+    background-color: transparent; 
+
+    h1 {
+        color: #fff;
+        position: absolute;
+        left: 50%;
+        top: 48%;
+        transform: translate(-50%, -50%);
+        z-index: 10;
+        font-size: 120px;
+        transition: .5s;
+    }
+
+    h2 {
+        position: absolute;
+        left: 50%;
+        top: 76%;
+        transform: translate(-50%, -50%);
+        letter-spacing: 10px;
+        font-size: 68px;
+        color: #fff;
+        -webkit-text-stroke: 2px #249bff;
+    }
+    .text{
+          position: absolute;
+        left: 50%;
+        top: 60%;
+        transform: translate(-50%, -50%);
+        letter-spacing: 5px;
+        font-size: 33px;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .max-div {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 350px;
+        height: 350px;
+        border-radius: 50%;
+        background-color: rgb(22 145 255 / 40%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: solid 18px rgba(92, 173, 246, 0.4);
+
+        .min-div {
+            width: 87%;
+            height: 87%;
+            background-color: rgba(45, 150, 245, 0.4);
+            border-radius: 50%;
+            border: 3px solid rgb(216 235 253 / 29%);
+        }
+
+
+    }
+
+    // .max-div-2 {
+    //         position: absolute;
+    //         left: 50%;
+    //         top: 50%;
+    //         transform: translate(-50%, -50%);
+    //         width: 420px;
+    //         height: 420px;
+    //         border-radius: 50%;
+    //         background-color: rgba(92, 173, 246, 0.4);
+    //     }
+}

@@ -1,0 +1,52 @@
+@font-face {
+    font-family: 'DS-Digital';
+    src: url('@/assets/fonts/Digitaltowoff/DS-Digital.woff2') format('woff2'),
+        url('@/assets/fonts/Digitaltowoff/DS-Digital.woff') format('woff');
+    //
+}
+
+
+.footer_box {
+    border-top: 1px #f0f0f0 solid;
+    height: 80px;
+    background-color: #fff;
+    user-select: none;
+    padding-left: 2%;
+
+    .anticon-play-circle {
+        font-size: 45px;
+        color: #2e7fff;
+    }
+
+    .anticon-play-circle:hover {
+        cursor: pointer;
+    }
+
+    .anticon-pause-circle {
+        font-size: 45px;
+        color: #2e7fff;
+    }
+
+    .anticon-pause-circle:hover {
+        cursor: pointer;
+    }
+
+    .anticon-stop {
+        font-size: 35px;
+        color: #cccccc;
+        cursor: no-drop;
+    }
+
+    .anticon-x {
+        font-size: 35px;
+        color: #ff1b1b;
+        cursor: pointer;
+    }
+
+    h2 {
+        font-size: 50px;
+        color: #69a3ff;
+        font-family: DS-Digital;
+        // letter-spacing: 4px;
+    }
+}

@@ -1,0 +1,25 @@
+.setup-title {
+    padding: 0 10px;
+    font-size: 18px;
+    background-color: #2e7fff;
+    color: #fff;
+    user-select: none;
+
+    .anticon-close {
+        cursor: pointer;
+    }
+
+    .anticon-close:hover {
+        color: #f6647f;
+    }
+
+    .title-bar {
+        height: 55px;
+        flex: 1;
+    }
+}
+
+.ant-layout-header {
+    height: 55px;
+    line-height: 55px;
+}

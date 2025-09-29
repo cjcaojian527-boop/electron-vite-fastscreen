@@ -1,0 +1,138 @@
+#videoSet {
+    position: fixed;
+    z-index: 99;
+    background: #fff;
+    inset: 0;
+    flex-direction: column;
+    user-select: none;
+
+
+
+    .videoSet-context {
+        flex: 1;
+
+        .videoBox {
+            height: 100%;
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: #323232;
+            position: relative;
+
+            video {
+                width: 100%;
+                object-fit: contain;
+                box-sizing: border-box;
+            }
+
+
+
+        }
+
+        .videoSet-context-list {
+            flex: 1;
+            height: 100%;
+            max-width: 40%;
+
+            .list-title {
+                font-size: 16px;
+                padding: 6px 0 6px 10px;
+            }
+
+            .list-item {
+                flex: 1;
+                background-color: #f4f6f8;
+                display: flex;
+                flex-direction: column;
+                flex-wrap: nowrap;
+                padding: 0 10px;
+
+                .ant-row {
+                    padding: 5px 0;
+                    border-bottom: solid 1px #ccc;
+
+                    .ant-col-20 {
+                        max-width: 80%;
+                        /* 必须设置一个宽度 */
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
+
+                    .ant-col-2 {
+                        text-align: center;
+
+                        .anticon {
+                            color: #616161;
+                            cursor: auto;
+                        }
+
+                        .anticon:hover {
+                            color: #616161;
+                        }
+                    }
+
+                    .ant-col-20:hover {
+                        color: #2e7fff;
+                        text-decoration: underline;
+                    }
+
+                    .anticon {
+                        cursor: pointer;
+                    }
+
+                    .anticon:hover {
+                        color: rgb(244, 42, 42);
+                    }
+                }
+            }
+
+            .bottom-icons {
+                height: 55px;
+                box-shadow: 0 0 2px 1px #00000030;
+
+                .icons {
+                    text-align: center;
+                    color: #9494a0;
+                    font-size: 18px;
+                    cursor: pointer;
+
+                    h6 {
+                        font-weight: 500;
+                    }
+                }
+
+                .icons:hover {
+                    color: #2e7fff;
+                }
+            }
+        }
+    }
+
+    .setup-title {
+        padding: 0 10px;
+        font-size: 18px;
+        background-color: #2e7fff;
+        color: #fff;
+        user-select: none;
+
+        .anticon-close {
+            cursor: pointer;
+        }
+
+        .anticon-close:hover {
+            color: #f6647f;
+        }
+
+        .title-bar {
+            height: 55px;
+            flex: 1;
+        }
+    }
+
+    .ant-layout-header {
+        height: 55px;
+        line-height: 55px;
+    }
+}

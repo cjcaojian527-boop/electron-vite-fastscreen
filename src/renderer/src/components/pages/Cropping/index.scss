@@ -1,0 +1,157 @@
+// .Cropping {
+//     height: 100%;
+//     position: relative;
+//     user-select: none;
+//     /* 关键步骤2: 将背景设置为透明 */
+//     background-color: transparent;
+//     overflow: hidden;
+//     padding: 30px;
+
+//     .CropBoxParent {
+//         border: solid 2px #000;
+//         display: inline-block;
+//         cursor: pointer;
+//         .CropBox {
+//             width: 800px;
+//             height: 600px;
+//             cursor: auto;   
+
+//         }
+//     }
+
+
+
+// }
+
+.draggable-container {
+    height: 100%;
+    position: relative;
+    user-select: none;
+    /* 关键步骤2: 将背景设置为透明 */
+    background-color: transparent;
+}
+
+.draggable-box {
+    position: absolute;
+    border: 1px solid #39f;
+    /* 裁剪框边框 */
+    box-sizing: border-box;
+    cursor: move;
+    /* 拖动光标 */
+    user-select: none;
+    box-shadow: 0 0 10000px 10000px #0000004a;
+
+    .title-p {
+        position: absolute;
+        background-color: #00000045;
+        padding: 6px;
+        color: #fff;
+        border-bottom-right-radius: 10px;
+    }
+
+    .btnBox {
+        position: absolute;
+        bottom: 3px;
+        right: 3px;
+        .ant-btn-color-primary{
+            margin-left: 7px;
+        }
+    }
+}
+
+/* 九宫格辅助线 */
+.line {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.line-horizontal {
+    width: 100%;
+    height: 1px;
+}
+
+.line-vertical {
+    width: 1px;
+    height: 100%;
+}
+
+.top-line {
+    top: 33.333%;
+}
+
+.bottom-line {
+    bottom: 33.333%;
+}
+
+.left-line {
+    left: 33.333%;
+}
+
+.right-line {
+    right: 33.333%;
+}
+
+
+/* 调整大小的手柄 */
+.handle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 1px solid #fff;
+    box-sizing: border-box;
+    z-index: 10;
+    background-color: #006cd9;
+    border-radius: 20%;
+}
+
+.handle-n {
+    top: -5px;
+    left: 50%;
+    margin-left: -5px;
+    cursor: n-resize;
+}
+
+.handle-e {
+    right: -5px;
+    top: 50%;
+    margin-top: -5px;
+    cursor: e-resize;
+}
+
+.handle-s {
+    bottom: -5px;
+    left: 50%;
+    margin-left: -5px;
+    cursor: s-resize;
+}
+
+.handle-w {
+    left: -5px;
+    top: 50%;
+    margin-top: -5px;
+    cursor: w-resize;
+}
+
+.handle-nw {
+    top: -5px;
+    left: -5px;
+    cursor: nw-resize;
+}
+
+.handle-ne {
+    top: -5px;
+    right: -5px;
+    cursor: ne-resize;
+}
+
+.handle-sw {
+    bottom: -5px;
+    left: -5px;
+    cursor: sw-resize;
+}
+
+.handle-se {
+    bottom: -5px;
+    right: -5px;
+    cursor: se-resize;
+}

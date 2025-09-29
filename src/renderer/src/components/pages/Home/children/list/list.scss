@@ -1,0 +1,29 @@
+.footerFlex {
+    flex: 1;
+
+    .anticon-redo {
+        // font-size: 18px;
+        // cursor: pointer;
+    }
+
+    .left {
+        color: #746f6f;
+        
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .left>span:hover {
+        color: #2e7fff;
+        text-decoration: underline;
+    }
+
+    .right {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    padding: 0 8px;
+}

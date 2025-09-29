@@ -1,0 +1,30 @@
+.ant-layout {
+    height: 100%;
+    background-color: #fff;
+    position: relative;
+
+    .ant-layout-header {
+        background-color: transparent;
+        padding: 0;
+    }
+
+    .ant-layout-sider {
+        background-color: transparent;
+    }
+
+    .ant-layout-footer {
+        background-color: transparent;
+        padding: 0;
+    }
+    .ant-layout-content{
+        overflow: hidden;
+    }
+
+}
+.ka-wrapper{
+    height: 100%;
+    .ka-content{
+        height: 100%;
+    }
+
+}

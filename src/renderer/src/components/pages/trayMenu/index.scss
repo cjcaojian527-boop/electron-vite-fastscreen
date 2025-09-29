@@ -1,0 +1,16 @@
+#root {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+
+    .ant-menu {
+        box-shadow: 0 0 4px 0px #0000003d;
+        border: solid 1px #d5d5d5 !important;
+        border-radius: 10px;
+        height: 98% !important;
+        width: 98%;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}

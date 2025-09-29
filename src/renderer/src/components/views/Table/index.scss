@@ -1,0 +1,100 @@
+.table-item {
+    height: 100%;
+    background-color: #fafafa;
+    // overflow-y: auto;
+    // border-radius: 10px;
+    // padding: 10px;
+    // border: solid 1px #abbbe1;
+    user-select: none;
+
+    // .ant-table-wrapper {
+    //     height: '100%' !important;
+
+    //     .ant-spin-nested-loading {
+    //         height: '100%' !important;
+
+    //         .ant-spin-container {
+    //             height: '100%' !important;
+
+    //             .ant-table {
+    //                 height: '100%' !important;
+    //                 display: flex;
+    //                 flex-direction: column;
+
+
+    //             }
+    //         }
+    //     }
+    // }
+    .ant-table-footer {
+        padding: 0;
+        height: 32px;
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .ant-table-row-selected-custom {
+        background-color: #d9edff;
+    }
+
+    .ant-table-title {
+        // padding: 2px 0 7px 10px;
+        padding: 0;
+    }
+
+    .table-item-title {
+        font-size: 19px;
+        font-weight: bold;
+        color: #464646;
+    }
+
+    .ant-tag {
+        cursor: pointer;
+    }
+
+    .cell-showformItem {
+        cursor: pointer;
+    }
+
+    .ant-table-thead {
+        .ant-table-cell {
+            padding: 11px 0;
+            color: #999999;
+        }
+    }
+
+    .ant-table-body {
+        scrollbar-color: auto !important;
+
+        .ant-table-cell {
+            padding: 14px 0;
+            color: #333333;
+            font-size: 12px;
+            background-color: transparent;
+
+            .cell-showformItem {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .anticon-bars {
+                font-size: 16px;
+
+            }
+
+            .ant-form-item {
+                margin: 0;
+            }
+        }
+    }
+
+
+
+
+}
+
+// :where(.css-dev-only-do-not-override-7t2xvq).ant-table-wrapper .ant-table {
+//     scrollbar-color: '#fff'
+// }

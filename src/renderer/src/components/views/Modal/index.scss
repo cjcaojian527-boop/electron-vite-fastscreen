@@ -1,0 +1,119 @@
+.ModalComp {
+    user-select: none;
+
+    .ant-modal-title {
+        background-color: #2e7fff;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 400;
+        padding: 7px 8px;
+        display: flex;
+        justify-content: space-between;
+
+        .anticon {
+            cursor: pointer;
+        }
+    }
+
+    .ant-modal-content {
+        padding: 0;
+        border-radius: 0;
+
+        .ant-modal-body {
+            min-height: 100px;
+
+            .ant-select {
+                width: 200px;
+                margin: 10px 0;
+
+            }
+
+            .ModalChildren {
+                padding: 10px;
+
+                .waterText {
+                    .anticon {
+                        cursor: pointer;
+                        font-size: 16px;
+                    }
+
+                    .anticon:hover {
+                        color: rgb(244, 42, 42);
+                    }
+                }
+
+                .ModalChildren-list {
+                    max-height: 200px;
+                    overflow: auto;
+                    display: flex;
+                    flex-direction: column;
+                    flex-wrap: nowrap;
+
+                    .ant-row {
+                        padding: 5px 0;
+                        border-bottom: solid 1px #ccc;
+
+                        .ant-col-20 {
+                            max-width: 80%;
+                            /* 必须设置一个宽度 */
+                            overflow: hidden;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                        }
+
+                        .ant-col-20:hover {
+                            color: #2e7fff;
+                            text-decoration: underline;
+                        }
+
+                        .anticon {
+                            cursor: pointer;
+                        }
+
+                        .anticon:hover {
+                            color: rgb(244, 42, 42);
+                        }
+                    }
+
+                }
+
+            }
+        }
+
+
+        .ant-modal-footer {
+            .footer {
+                display: flex;
+                align-items: center;
+
+                span {
+                    width: 50%;
+                    text-align: center;
+                    border-top: solid 1px #f0f0f0;
+                    padding: 10px 12px;
+                    cursor: auto;
+                    user-select: none;
+
+                }
+
+                .a1 {
+                    background-color: #2e7fff;
+                    color: #fff;
+                }
+
+                .a2 {
+                    background-color: #ffffff;
+                    color: #000;
+                }
+
+                .a1:hover {
+                    background-color: #2a73e7;
+                }
+
+                .a2:hover {
+                    background-color: #eeeeee;
+                }
+            }
+        }
+    }
+}

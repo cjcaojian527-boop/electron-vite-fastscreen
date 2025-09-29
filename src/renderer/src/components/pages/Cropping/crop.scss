@@ -1,0 +1,104 @@
+.draggable-box {
+    position: absolute;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    cursor: move;
+    user-select: none;
+    z-index: 1;
+    transition: border 0.2s ease;
+
+    &:hover {
+        border: 1px dashed #2e7fff; // hover 时显示虚线高亮
+    }
+
+    &.selected {
+        border: 1px solid #fb2b18; // 选中时显示实线
+
+        .handle {
+            display: block; // 手柄显示
+        }
+    }
+
+    .context {
+        height: 100%;
+        width: 100%;
+
+        img {
+            height: 100%;
+            width: 100%;
+            -webkit-user-drag: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        video {
+            height: 100%;
+            width: 100%;
+            object-fit: cover !important;
+        }
+    }
+}
+
+/* 八方向手柄 */
+.handle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border: 1px solid #fff;
+    background-color: #fb2b18;
+    border-radius: 25%;
+    z-index: 10;
+    display: none; // 默认隐藏
+}
+
+.handle-n {
+    top: -4px;
+    left: 50%;
+    margin-left: -4px;
+    cursor: n-resize;
+}
+
+.handle-e {
+    right: -4px;
+    top: 50%;
+    margin-top: -4px;
+    cursor: e-resize;
+}
+
+.handle-s {
+    bottom: -4px;
+    left: 50%;
+    margin-left: -4px;
+    cursor: s-resize;
+}
+
+.handle-w {
+    left: -4px;
+    top: 50%;
+    margin-top: -4px;
+    cursor: w-resize;
+}
+
+.handle-nw {
+    top: -4px;
+    left: -4px;
+    cursor: nw-resize;
+}
+
+.handle-ne {
+    top: -4px;
+    right: -4px;
+    cursor: ne-resize;
+}
+
+.handle-sw {
+    bottom: -4px;
+    left: -4px;
+    cursor: sw-resize;
+}
+
+.handle-se {
+    bottom: -4px;
+    right: -4px;
+    cursor: se-resize;
+}
