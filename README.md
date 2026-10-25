@@ -2,6 +2,14 @@
 
 An Electron application with React
 
+## 下载安装
+
+Windows 安装包（32 位）v1.0.0：
+
+👉 **[点击下载 FastScreen Windows 版](https://dalanben.live/Preview/downloads/fastscreen-win-ia32-1.0.0.exe)**
+
+> 下载后双击安装即可使用，当前仅提供 Windows 版本。
+
 ## Recommended IDE Setup
 
 - [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
